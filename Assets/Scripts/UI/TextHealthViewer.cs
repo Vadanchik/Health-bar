@@ -1,23 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-public class TextHealthViewer : MonoBehaviour
+public class TextHealthViewer : HealthViewer
 {
-    [SerializeField] private Health _health;
     [SerializeField] private TMP_Text _healthText;
 
-    private void OnEnable()
+    protected override void DisplayView(float value)
     {
-        _health.HealthChanged += TextView;
-    }
-
-    private void OnDisable()
-    {
-        _health.HealthChanged -= TextView;
-    }
-
-    private void TextView(float value)
-    {
-        _healthText.text = value.ToString() + "/" + _health.MaxHealth;
+        _healthText.text = value.ToString() + "/" + _health.MaxValue;
     }
 }

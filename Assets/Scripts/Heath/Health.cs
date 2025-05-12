@@ -3,28 +3,27 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private int _maxHealth;
-    private int _currentHeath;
+    [SerializeField] private int _maxValue;
+    private int _currentValue;
 
-    public event Action<float> HealthChanged;
+    public event Action<float> ValueChanged;
 
-    public int CurrentHealth => _currentHeath;
-    public int MaxHealth => _maxHealth;
-    public bool IsAlive => _currentHeath > 0;
-    
+    public int CurrentValue => _currentValue;
+    public int MaxValue => _maxValue;
+    public bool IsAlive => _currentValue > 0;
 
     private void Start()
     {
-        _currentHeath = _maxHealth;
-        HealthChanged?.Invoke(_currentHeath);
+        _currentValue = _maxValue;
+        ValueChanged?.Invoke(_currentValue);
     }
 
     public void SubstractHealth(int value)
     {
         if (value > 0)
         {
-            _currentHeath = Mathf.Clamp(_currentHeath - Mathf.Clamp(value, 0, int.MaxValue), 0, _maxHealth);
-            HealthChanged?.Invoke(_currentHeath);
+            _currentValue = Mathf.Clamp(_currentValue - value, 0, _maxValue);
+            ValueChanged?.Invoke(_currentValue);
         }
     }
 
@@ -32,8 +31,8 @@ public class Health : MonoBehaviour
     {
         if (value > 0)
         {
-            _currentHeath = Mathf.Clamp(_currentHeath + Mathf.Clamp(value, 0, int.MaxValue), 0, _maxHealth);
-            HealthChanged?.Invoke(_currentHeath);
+            _currentValue = Mathf.Clamp(_currentValue + value, 0, _maxValue);
+            ValueChanged?.Invoke(_currentValue);
         }
     }
 }

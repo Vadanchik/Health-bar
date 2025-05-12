@@ -2,39 +2,28 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SmoothBarHealthViewer : MonoBehaviour
+public class SmoothBarHealthViewer : HealthViewer
 {
-    [SerializeField] private Health _health;
     [SerializeField] private Slider _healthSmoothBar;
-    [SerializeField] private float _smoothSpeed = 1.0f;
+    [SerializeField] private float _speed = 1.0f;
 
     private Coroutine _currentCoroutine;
 
-    private void OnEnable()
-    {
-        _health.HealthChanged += SetTargetValue;
-    }
-
-    private void OnDisable()
-    {
-        _health.HealthChanged -= SetTargetValue;
-    }
-
-    private void SetTargetValue(float value)
+    protected override void DisplayView(float value)
     {
         if (_currentCoroutine != null)
             StopCoroutine(_currentCoroutine);
 
-        _currentCoroutine = StartCoroutine(SmoothBarView(value));
+        _currentCoroutine = StartCoroutine(DisplaySmoothBar(value));
     }
 
-    private IEnumerator SmoothBarView(float targetValue)
+    private IEnumerator DisplaySmoothBar(float targetValue)
     {
         WaitForEndOfFrame wait = new WaitForEndOfFrame();
-
-        while (_healthSmoothBar.value != targetValue)
+        
+        while (Mathf.Approximately(_healthSmoothBar.value, targetValue) == false)
         {
-            _healthSmoothBar.value = Mathf.MoveTowards(_healthSmoothBar.value, targetValue / _health.MaxHealth, Time.deltaTime * _smoothSpeed);
+            _healthSmoothBar.value = Mathf.MoveTowards(_healthSmoothBar.value, targetValue / _health.MaxValue, Time.deltaTime * _speed);
             yield return wait;
         }
     }

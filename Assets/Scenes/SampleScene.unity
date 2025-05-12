@@ -457,7 +457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 434967352}
   _healthSmoothBar: {fileID: 582551115}
-  _smoothSpeed: 1
+  _speed: 1
 --- !u!114 &88384153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,7 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2709769ac1dbc043b8b23b49c6ff034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 10
+  _maxValue: 10
 --- !u!4 &434967353
 Transform:
   m_ObjectHideFlags: 0
